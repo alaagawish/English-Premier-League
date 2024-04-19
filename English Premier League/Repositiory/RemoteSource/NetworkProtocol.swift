@@ -6,7 +6,8 @@
 //
 
 import Foundation
+import Alamofire
 
 protocol NetworkProtocol {
-    
+    func getAllMatches(path: String, handler: @escaping (MatchResponse?) -> Void) 
 }

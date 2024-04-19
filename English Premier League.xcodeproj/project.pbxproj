@@ -33,6 +33,8 @@
 		6102E25E2BD2A6F7002FE668 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6102E25D2BD2A6F7002FE668 /* HomeViewModel.swift */; };
 		6102E2602BD2A70C002FE668 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6102E25F2BD2A70C002FE668 /* HomeViewController.swift */; };
 		6102E2622BD2A721002FE668 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6102E2612BD2A721002FE668 /* Constants.swift */; };
+		6102E2652BD2B0C4002FE668 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 6102E2642BD2B0C4002FE668 /* Alamofire */; };
+		6102E2682BD2B0FA002FE668 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 6102E2672BD2B0FA002FE668 /* Kingfisher */; };
 		61D2CB4A2BD19245003EF275 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D2CB492BD19245003EF275 /* AppDelegate.swift */; };
 		61D2CB4C2BD19245003EF275 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D2CB4B2BD19245003EF275 /* SceneDelegate.swift */; };
 		61D2CB4E2BD19245003EF275 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D2CB4D2BD19245003EF275 /* ViewController.swift */; };
@@ -110,6 +112,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6102E2682BD2B0FA002FE668 /* Kingfisher in Frameworks */,
+				6102E2652BD2B0C4002FE668 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,6 +332,10 @@
 			dependencies = (
 			);
 			name = "English Premier League";
+			packageProductDependencies = (
+				6102E2642BD2B0C4002FE668 /* Alamofire */,
+				6102E2672BD2B0FA002FE668 /* Kingfisher */,
+			);
 			productName = "English Premier League";
 			productReference = 61D2CB462BD19245003EF275 /* English Premier League.app */;
 			productType = "com.apple.product-type.application";
@@ -400,6 +408,10 @@
 				Base,
 			);
 			mainGroup = 61D2CB3D2BD19245003EF275;
+			packageReferences = (
+				6102E2632BD2B0C4002FE668 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				6102E2662BD2B0FA002FE668 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
 			productRefGroup = 61D2CB472BD19245003EF275 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -658,7 +670,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -688,7 +700,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -818,6 +830,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6102E2632BD2B0C4002FE668 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+		6102E2662BD2B0FA002FE668 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6102E2642BD2B0C4002FE668 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6102E2632BD2B0C4002FE668 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		6102E2672BD2B0FA002FE668 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6102E2662BD2B0FA002FE668 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		61D2CB522BD19245003EF275 /* English_Premier_League.xcdatamodeld */ = {

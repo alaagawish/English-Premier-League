@@ -9,8 +9,8 @@ import Foundation
 
 struct FullTime: Codable {
 
-    let homeTeam: Int
-    let awayTeam: Int
+    let homeTeam: Int?
+    let awayTeam: Int?
 
     private enum CodingKeys: String, CodingKey {
         case homeTeam = "homeTeam"

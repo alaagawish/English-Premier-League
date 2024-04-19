@@ -12,7 +12,7 @@ struct MatchResponse: Codable {
     let count: Int
     let filters: Filters
     let competition: Competition
-    let matches: [Matches]
+    let matches: [Matches]?
 
     private enum CodingKeys: String, CodingKey {
         case count = "count"

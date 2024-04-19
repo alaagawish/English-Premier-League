@@ -9,7 +9,7 @@ import Foundation
 
 struct Odds: Codable {
 
-    let msg: String
+    let msg: String?
 
     private enum CodingKeys: String, CodingKey {
         case msg = "msg"

@@ -9,12 +9,12 @@ import Foundation
 
 struct Score: Codable {
 
-    let winner: String
-    let duration: String
-    let fullTime: FullTime
-    let halfTime: HalfTime
-    let extraTime: ExtraTime
-    let penalties: Penalties
+    let winner: String?
+    let duration: String?
+    let fullTime: FullTime?
+    let halfTime: HalfTime?
+    let extraTime: ExtraTime?
+    let penalties: Penalties?
 
     private enum CodingKeys: String, CodingKey {
         case winner = "winner"

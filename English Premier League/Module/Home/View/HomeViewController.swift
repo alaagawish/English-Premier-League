@@ -11,17 +11,40 @@ class HomeViewController: UIViewController {
     
     @IBOutlet weak var gamesTableView: UITableView!
     var homeViewModel: HomeViewModel!
+    var activityIndicator: UIActivityIndicatorView!
     var matches: [Matches]?
     var days: [String] = []
     var sections: [[Matches]] = []
     var flag: Bool = true
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupActivityIndicator()
+        showActivityIndicator()
         
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+            self.hideActivityIndicator()
+            self.scrollToTodaySection()
+            
+        }
         homeViewModel = HomeViewModel(repositiory: Repo(network: Network(), database: Database()))
         configurateCell()
         
         
+    }
+    
+    func scrollToTodaySection() {
+        let today =  Date()
+        
+        for i in 0 ..< sections.count {
+            
+            if sections[i].firstIndex(where: {Functions().convertUTCToYYYYMMDD(utcDate:  $0.utcDate ?? "") ?? "" == Functions().formatDateToString(date: today, format: "yyyy-MM-dd")}) != nil {
+                
+                let indexPath = IndexPath(row: 0, section: i)
+                
+                
+                gamesTableView.scrollToRow(at: indexPath, at: .top, animated: true)
+            }
+        }
     }
     
     func configurateCell() {
@@ -39,8 +62,24 @@ class HomeViewController: UIViewController {
             self.calculateNumberOfSections()
             
         }
+        scrollToTodaySection()
+    }
+    func setupActivityIndicator() {
+        activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.color = .gray
+        activityIndicator.center = view.center
+        view.addSubview(activityIndicator)
     }
     
+    func showActivityIndicator() {
+        activityIndicator.startAnimating()
+    }
+    
+    func hideActivityIndicator() {
+        activityIndicator.stopAnimating()
+        activityIndicator.removeFromSuperview()
+        scrollToTodaySection()
+    }
 }
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
@@ -90,8 +129,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
 }
 extension HomeViewController: AddToFavDelegate {
     
-    
-    
     func addGameToFav(indexPath: IndexPath, status: String)   {
         if status == Constants.fillHeart {
             self.homeViewModel.removeFromFav((self.matches?[indexPath.row])!)
@@ -113,7 +150,6 @@ extension HomeViewController: AddToFavDelegate {
         }
     }
     
-    
 }
 
 
@@ -134,6 +170,7 @@ extension HomeViewController {
                 
             })
         gamesTableView.reloadData()
+        
         
     }
     

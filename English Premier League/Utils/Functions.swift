@@ -39,4 +39,24 @@ class Functions {
            
            return hhmmAString
     }
+    
+    func convertUTCToDate(utcDate: String) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+         
+        if let date = dateFormatter.date(from: utcDate) {
+            return date
+        } else {
+            return nil 
+        }
+    }
+    
+    func formatDateToString(date: Date, format: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        return dateFormatter.string(from: date)
+    }
+
+
 }

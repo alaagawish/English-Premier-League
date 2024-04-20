@@ -9,10 +9,10 @@ import Foundation
 
 struct Referees: Codable {
 
-    let id: Int
-    let name: String
-    let role: String
-    let nationality: String
+    let id: Int?
+    let name: String?
+    let role: String?
+    let nationality: String?
 
     private enum CodingKeys: String, CodingKey {
         case id = "id"

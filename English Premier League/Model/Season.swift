@@ -9,10 +9,10 @@ import Foundation
 
 struct Season: Codable {
 
-    let id: Int
-    let startDate: String
-    let endDate: String
-    let currentMatchday: Int
+    let id: Int?
+    let startDate: String?
+    let endDate: String?
+    let currentMatchday: Int?
 
     private enum CodingKeys: String, CodingKey {
         case id = "id"

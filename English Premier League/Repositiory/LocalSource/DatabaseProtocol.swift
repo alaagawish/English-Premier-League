@@ -6,7 +6,12 @@
 //
 
 import Foundation
+import CoreData
 
 protocol DatabaseProtocol {
+    func addMatchToFav(match: LocalMatch)
+    func removeMatchFromFav(match: LocalMatch)
+    func getAllMatches() -> [FavMatch]
+    func searchFor(match: LocalMatch) -> Bool
     
 }

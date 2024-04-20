@@ -9,8 +9,8 @@ import Foundation
 
 struct AwayTeam: Codable {
 
-    let id: Int
-    let name: String
+    let id: Int?
+    let name: String?
 
     private enum CodingKeys: String, CodingKey {
         case id = "id"

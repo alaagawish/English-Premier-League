@@ -9,8 +9,8 @@ import Foundation
 
 struct Penalties: Codable {
 
-    let homeTeam: Any
-    let awayTeam: Any
+    let homeTeam: Int?
+    let awayTeam: Int?
 
     private enum CodingKeys: String, CodingKey {
         case homeTeam = "homeTeam"

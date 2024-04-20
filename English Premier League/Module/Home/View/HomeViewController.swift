@@ -20,14 +20,7 @@ class HomeViewController: UIViewController {
         homeViewModel = HomeViewModel(repositiory: Repo(network: Network(), database: Database()))
         configurateCell()
         
-        homeViewModel.getAllMatches()
-        
-        homeViewModel.bindMatchesToVC = { [weak self] in
-            guard let self = self else { return }
-            self.matches = self.homeViewModel.matches?.matches
-            self.getDays()
-            
-        }
+       
     }
     func getDays() {
         for i in matches ?? [] {
@@ -42,7 +35,17 @@ class HomeViewController: UIViewController {
         gamesTableView.register(nib, forCellReuseIdentifier: Constants.GameTableViewCellID)
     }
     
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        homeViewModel.getAllMatches()
+        
+        homeViewModel.bindMatchesToVC = { [weak self] in
+            guard let self = self else { return }
+            self.matches = self.homeViewModel.matches?.matches
+            self.getDays()
+            
+        }
+    }
     
 }
 

@@ -65,4 +65,20 @@ class HomeViewModel {
         }
         repositiory.removeMatchFromFav(match: m)
     }
+    
+    func getAllFavMatches() -> [LocalMatch]{
+        let matches = repositiory.getAllMatches()
+        var localMatches: [LocalMatch] = []
+        for i in matches {
+            localMatches.append(LocalMatch(homeTeam: i.home_team, awayTeam: i.away_team, status: i.status, id: i.id, timeResult: i.time_result))
+            
+        }
+        
+        return localMatches
+    }
+    func removeFromFav(m: LocalMatch) {
+        
+        
+        repositiory.removeMatchFromFav(match: m)
+    }
 }

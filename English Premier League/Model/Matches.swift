@@ -14,8 +14,7 @@ struct Matches: Codable {
     let utcDate: String?
     let status: String?
     let matchday: Int?
-    let stage: String?
-//    let group: Any?
+    let stage: String? 
     let lastUpdated: String?
     let odds: Odds?
     let score: Score?
@@ -30,7 +29,6 @@ struct Matches: Codable {
         case status = "status"
         case matchday = "matchday"
         case stage = "stage"
-//        case group = "group"
         case lastUpdated = "lastUpdated"
         case odds = "odds"
         case score = "score"

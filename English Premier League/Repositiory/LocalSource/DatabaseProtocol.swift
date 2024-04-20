@@ -11,6 +11,7 @@ import CoreData
 protocol DatabaseProtocol {
     func addMatchToFav(match: FavMatch)
     func removeMatchFromFav(match: FavMatch)
-    
+    func getAllMatches() -> [FavMatch]
+    func searchFor(match: FavMatch) -> Bool
     
 }

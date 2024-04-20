@@ -13,6 +13,7 @@ class HomeViewController: UIViewController {
     var homeViewModel: HomeViewModel!
     var matches: [Matches]?
     var days: [String] = []
+    var sections: [[Matches]] = []
     var flag: Bool = true
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,14 +21,7 @@ class HomeViewController: UIViewController {
         homeViewModel = HomeViewModel(repositiory: Repo(network: Network(), database: Database()))
         configurateCell()
         
-       
-    }
-    func getDays() {
-        for i in matches ?? [] {
-            days.append(i.utcDate ?? "")
-        }
         
-        gamesTableView.reloadData()
     }
     
     func configurateCell() {
@@ -42,7 +36,7 @@ class HomeViewController: UIViewController {
         homeViewModel.bindMatchesToVC = { [weak self] in
             guard let self = self else { return }
             self.matches = self.homeViewModel.matches?.matches
-            self.getDays()
+            self.calculateNumberOfSections()
             
         }
     }
@@ -51,49 +45,71 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return sections.count
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return matches?.count ?? 0
+        return sections[section].count
     }
     
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if sections.count > 0 {
+            return Functions().convertUTCToYYYYMMDD(utcDate: sections[section][0].utcDate ?? "")
+        } else {
+            return ""
+        }
+    }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.GameTableViewCellID, for: indexPath) as! GameTableViewCell
         
-        if matches?[indexPath.row].status == "FINISHED" {
-            cell.addFinishedGame(homeTeam: matches?[indexPath.row].homeTeam?.name ?? "", awayTeam: matches?[indexPath.row].awayTeam?.name ?? "", time: "\(matches?[indexPath.row].score?.fullTime?.homeTeam ?? 0):\(matches?[indexPath.row].score?.fullTime?.awayTeam ?? 0)", fave: homeViewModel.checkItemInFav(matches![indexPath.row]))
+        if sections[indexPath.section][indexPath.row].status == Constants.FINISHED {
+            cell.addFinishedGame(
+                homeTeam: sections[indexPath.section][indexPath.row].homeTeam?.name ?? "",
+                awayTeam: sections[indexPath.section][indexPath.row].awayTeam?.name ?? "",
+                time: "\(sections[indexPath.section][indexPath.row].score?.fullTime?.homeTeam ?? 0):\(sections[indexPath.section][indexPath.row].score?.fullTime?.awayTeam ?? 0)",
+                fave: homeViewModel.checkItemInFav(sections[indexPath.section][indexPath.row]))
         } else {
-            cell.addScheduledGame(homeTeam: matches?[indexPath.row].homeTeam?.name ?? "", awayTeam: matches?[indexPath.row].awayTeam?.name ?? "", time: matches?[indexPath.row].utcDate ?? "", fave: homeViewModel.checkItemInFav(matches![indexPath.row]))
+            cell.addScheduledGame(
+                homeTeam: sections[indexPath.section][indexPath.row].homeTeam?.name ?? "",
+                awayTeam: sections[indexPath.section][indexPath.row].awayTeam?.name ?? "",
+                time: Functions().convertUTCToHHMM(utcDate: sections[indexPath.section][indexPath.row].utcDate ?? "") ?? "",
+                fave: homeViewModel.checkItemInFav(sections[indexPath.section][indexPath.row]))
         }
         cell.indexPath = indexPath
         cell.addToFavDelegate = self
         
         return cell
     }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 130
     }
-  
+    
+    
+    
+    
 }
 extension HomeViewController: AddToFavDelegate {
-    func addGameToFav(indexPath: IndexPath, status: String)   {
-        if status == "heart.fill" {
-            self.homeViewModel.removeFromFav((self.matches?[indexPath.row])!)
-//            let alert : UIAlertController = UIAlertController(title: "Delete from favourites", message: "ARE YOU SURE TO DELETE?", preferredStyle: .alert)
-//
-//            alert.addAction(UIAlertAction(title: "YES", style: .default,handler: { [weak self] action in
-//                guard let self = self else { return }
-//                self.homeViewModel.removeFromFav((self.matches?[indexPath.row])!)
-//                self.flag = false
-//
-//
-//            }))
-//            alert.addAction(UIAlertAction(title: "NO", style: .cancel,handler: nil))
-//            self.present(alert, animated: true, completion: nil)
-//            return flag
-        } else {
-          homeViewModel.addToFav(matches![indexPath.row])
     
+    
+    
+    func addGameToFav(indexPath: IndexPath, status: String)   {
+        if status == Constants.fillHeart {
+            self.homeViewModel.removeFromFav((self.matches?[indexPath.row])!)
+            //            let alert : UIAlertController = UIAlertController(title: "Delete from favourites", message: "ARE YOU SURE TO DELETE?", preferredStyle: .alert)
+            //
+            //            alert.addAction(UIAlertAction(title: "YES", style: .default,handler: { [weak self] action in
+            //                guard let self = self else { return }
+            //                self.homeViewModel.removeFromFav((self.matches?[indexPath.row])!)
+            //                self.flag = false
+            //
+            //
+            //            }))
+            //            alert.addAction(UIAlertAction(title: "NO", style: .cancel,handler: nil))
+            //            self.present(alert, animated: true, completion: nil)
+            //            return flag
+        } else {
+            homeViewModel.addToFav(matches![indexPath.row])
+            
         }
     }
     
@@ -101,3 +117,24 @@ extension HomeViewController: AddToFavDelegate {
 }
 
 
+extension HomeViewController {
+    
+    
+    func calculateNumberOfSections() {
+        sections = []
+        matches?.forEach(
+            { match in
+                let matchDate = Functions().convertUTCToYYYYMMDD(utcDate: match.utcDate ?? "")
+                
+                if let sectionIndex = sections.firstIndex(where: { Functions().convertUTCToYYYYMMDD(utcDate: $0.first?.utcDate ?? "") == matchDate }) {
+                    sections[sectionIndex].append(match)
+                } else {
+                    sections.append([match])
+                }
+                
+            })
+        gamesTableView.reloadData()
+        
+    }
+    
+}

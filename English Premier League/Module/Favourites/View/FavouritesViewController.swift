@@ -40,15 +40,16 @@ extension FavouritesViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.GameTableViewCellID, for: indexPath) as! GameTableViewCell
         
-        if matches[indexPath.row].status == "FINISHED" {
+        if matches[indexPath.row].status == Constants.FINISHED {
             cell.addFinishedGame(homeTeam: matches[indexPath.row].homeTeam ?? "", awayTeam: matches[indexPath.row].awayTeam ?? "", time: matches[indexPath.row].timeResult ?? "", fave: true)
         } else {
-            cell.addScheduledGame(homeTeam: matches[indexPath.row].homeTeam ?? "", awayTeam: matches[indexPath.row].awayTeam ?? "", time: matches[indexPath.row].timeResult ?? "", fave: true)
+            cell.addScheduledGame(homeTeam: matches[indexPath.row].homeTeam ?? "", awayTeam: matches[indexPath.row].awayTeam ?? "", time: Functions().convertUTCToHHMM(utcDate: matches[indexPath.row].timeResult ?? "") ?? "", fave: true)
         }
         cell.indexPath = indexPath
         cell.addToFavDelegate = self
         return cell
     }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 130
     }

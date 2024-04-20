@@ -21,7 +21,7 @@ class HomeViewModel {
     }
     
     func getAllMatches() {
-        repositiory.getAllMatches(path: "v2/competitions/2021/matches") { [weak self] matches in
+        repositiory.getAllMatches(path: Constants.matchesPath) { [weak self] matches in
             
             guard let self = self else { return }
             self.matches = matches
@@ -31,7 +31,7 @@ class HomeViewModel {
     func checkItemInFav(_ match: Matches) -> Bool {
         var m :LocalMatch
         
-        if match.status == "FINISHED" {
+        if match.status == Constants.FINISHED {
             
             m = LocalMatch(homeTeam: match.homeTeam?.name, awayTeam: match.awayTeam?.name, status: match.status, id: Int64(match.id ?? 0), timeResult:  "\(match.score?.fullTime?.homeTeam ?? 0):\(match.score?.fullTime?.awayTeam ?? 0)")
         } else {
@@ -44,7 +44,7 @@ class HomeViewModel {
     
     func addToFav(_ match: Matches) {
         var m :LocalMatch
-        if match.status == "FINISHED" {
+        if match.status == Constants.FINISHED {
             
             m = LocalMatch(homeTeam: match.homeTeam?.name, awayTeam: match.awayTeam?.name, status: match.status, id: Int64(match.id ?? 0), timeResult:  "\(match.score?.fullTime?.homeTeam ?? 0):\(match.score?.fullTime?.awayTeam ?? 0)")
         } else {
@@ -56,7 +56,7 @@ class HomeViewModel {
     
     func removeFromFav(_ match: Matches) {
         var m :LocalMatch
-        if match.status == "FINISHED" {
+        if match.status == Constants.FINISHED {
             
             m = LocalMatch(homeTeam: match.homeTeam?.name, awayTeam: match.awayTeam?.name, status: match.status, id: Int64(match.id ?? 0), timeResult:  "\(match.score?.fullTime?.homeTeam ?? 0):\(match.score?.fullTime?.awayTeam ?? 0)")
         } else {

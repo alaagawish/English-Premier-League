@@ -66,7 +66,7 @@ class HomeViewModel {
         repositiory.removeMatchFromFav(match: m)
     }
     
-    func getAllFavMatches() -> [LocalMatch]{
+    func getAllFavMatches() -> [LocalMatch] {
         let matches = repositiory.getAllMatches()
         var localMatches: [LocalMatch] = []
         for i in matches {
@@ -77,7 +77,6 @@ class HomeViewModel {
         return localMatches
     }
     func removeFromFav(m: LocalMatch) {
-        
         
         repositiory.removeMatchFromFav(match: m)
     }

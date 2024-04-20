@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol RepoProtocol {
+protocol RepoProtocol: NetworkProtocol, DatabaseProtocol {
     
 }

@@ -36,8 +36,15 @@ class GameTableViewCell: UITableViewCell {
     }
     
     @IBAction func addItemToFav(_ sender: Any) {
-        
-        addToFavDelegate.addGameToFav(indexPath: indexPath)
+        if addToFavButton.image(for: .normal) == UIImage(systemName: "heart") {
+            
+            addToFavDelegate.addGameToFav(indexPath: indexPath, status: "heart")
+            checkButton(fave: true)
+        } else {
+            
+            addToFavDelegate.addGameToFav(indexPath: indexPath, status: "heart.fill")
+            checkButton(fave: false)
+        }
     }
     func addFinishedGame(homeTeam: String, awayTeam: String, time: String, fave: Bool) {
         gameStatusLabel.text = "Finished"

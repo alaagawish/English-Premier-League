@@ -9,9 +9,9 @@ import Foundation
 import CoreData
 
 protocol DatabaseProtocol {
-    func addMatchToFav(match: FavMatch)
-    func removeMatchFromFav(match: FavMatch)
+    func addMatchToFav(match: LocalMatch)
+    func removeMatchFromFav(match: LocalMatch)
     func getAllMatches() -> [FavMatch]
-    func searchFor(match: FavMatch) -> Bool
+    func searchFor(match: LocalMatch) -> Bool
     
 }

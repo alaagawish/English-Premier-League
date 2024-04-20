@@ -12,33 +12,33 @@ import UIKit
 class Database: DatabaseProtocol {
     
     var managedContext: NSManagedObjectContext
-    init(){
+    init() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         managedContext = appDelegate.persistentContainer.viewContext
     }
     
-    func addMatchToFav(match: FavMatch) {
+    func addMatchToFav(match: LocalMatch) {
         let entity = NSEntityDescription.entity(forEntityName: Constants.EntityName, in: managedContext)
         let league = NSManagedObject(entity: entity!, insertInto: managedContext)
-        league.setValue(match.away_team, forKey: Constants.awayTeam)
-        league.setValue(match.home_team, forKey: Constants.homeTeam)
+        league.setValue(match.awayTeam, forKey: Constants.awayTeam)
+        league.setValue(match.homeTeam, forKey: Constants.homeTeam)
         league.setValue(match.id, forKey: Constants.id)
         league.setValue(match.status, forKey: Constants.status)
-        league.setValue(match.time_result, forKey: Constants.timeResult)
-        do{
+        league.setValue(match.timeResult, forKey: Constants.timeResult)
+        do {
             try managedContext.save()
             print("\nInserting a match done...\n")
-        }catch let error as NSError{
+        } catch let error as NSError {
             print("\nerror in adding to favourite: \(error)\n")
         }
     }
     
-    func removeMatchFromFav(match: FavMatch) {
+    func removeMatchFromFav(match: LocalMatch) {
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: Constants.EntityName)
         
-        let myPredicate = NSPredicate(format: "id == %d", match.id)
+        let myPredicate = NSPredicate(format: "id == %d", match.id!)
         fetchRequest.predicate = myPredicate
-        do{
+        do {
             let leagues = try managedContext.fetch(fetchRequest)
             print(leagues.count)
             if leagues.count > 0{
@@ -46,7 +46,7 @@ class Database: DatabaseProtocol {
                 try managedContext.save()
                 print("\nDelete league done...\n")
             }
-        }catch let error as NSError{
+        } catch let error as NSError {
             print("\nerror in deleteting a league : \(error)\n")
         }
         
@@ -68,9 +68,9 @@ class Database: DatabaseProtocol {
         return []
     }
     
-    func searchFor(match: FavMatch) -> Bool {
+    func searchFor(match: LocalMatch) -> Bool {
         let fetchRequest = NSFetchRequest<FavMatch>(entityName: Constants.EntityName)
-        fetchRequest.predicate = NSPredicate(format: "id == %", match.id)
+        fetchRequest.predicate = NSPredicate(format: "id == %d", match.id!)
         
         do {
             let fetchedItems = try managedContext.fetch(fetchRequest)

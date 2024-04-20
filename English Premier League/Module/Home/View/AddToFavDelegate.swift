@@ -8,5 +8,5 @@
 import Foundation
 
 protocol AddToFavDelegate {
-    func addGameToFav(indexPath: IndexPath)
+    func addGameToFav(indexPath: IndexPath, status: String)  
 }

@@ -3,7 +3,7 @@
     <entity name="FavMatch" representedClassName=".FavMatch" syncable="YES" codeGenerationType="class">
         <attribute name="away_team" optional="YES" attributeType="String"/>
         <attribute name="home_team" optional="YES" attributeType="String"/>
-        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="status" optional="YES" attributeType="String"/>
         <attribute name="time_result" optional="YES" attributeType="String"/>
     </entity>

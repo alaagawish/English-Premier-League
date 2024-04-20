@@ -13,10 +13,11 @@ class HomeViewController: UIViewController {
     var homeViewModel: HomeViewModel!
     var matches: [Matches]?
     var days: [String] = []
+    var flag: Bool = true
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        homeViewModel = HomeViewModel(network: Network())
+        homeViewModel = HomeViewModel(repositiory: Repo(network: Network(), database: Database()))
         configurateCell()
         
         homeViewModel.getAllMatches()
@@ -57,9 +58,9 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.GameTableViewCellID, for: indexPath) as! GameTableViewCell
         
         if matches?[indexPath.row].status == "FINISHED" {
-            cell.addFinishedGame(homeTeam: matches?[indexPath.row].homeTeam?.name ?? "", awayTeam: matches?[indexPath.row].awayTeam?.name ?? "", time: "\(matches?[indexPath.row].score?.fullTime?.homeTeam ?? 0):\(matches?[indexPath.row].score?.fullTime?.awayTeam ?? 0)", fave: false)
+            cell.addFinishedGame(homeTeam: matches?[indexPath.row].homeTeam?.name ?? "", awayTeam: matches?[indexPath.row].awayTeam?.name ?? "", time: "\(matches?[indexPath.row].score?.fullTime?.homeTeam ?? 0):\(matches?[indexPath.row].score?.fullTime?.awayTeam ?? 0)", fave: homeViewModel.checkItemInFav(matches![indexPath.row]))
         } else {
-            cell.addScheduledGame(homeTeam: matches?[indexPath.row].homeTeam?.name ?? "", awayTeam: matches?[indexPath.row].awayTeam?.name ?? "", time: matches?[indexPath.row].utcDate ?? "", fave: true)
+            cell.addScheduledGame(homeTeam: matches?[indexPath.row].homeTeam?.name ?? "", awayTeam: matches?[indexPath.row].awayTeam?.name ?? "", time: matches?[indexPath.row].utcDate ?? "", fave: homeViewModel.checkItemInFav(matches![indexPath.row]))
         }
         cell.indexPath = indexPath
         cell.addToFavDelegate = self
@@ -69,12 +70,31 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 130
     }
-    
+  
 }
 extension HomeViewController: AddToFavDelegate {
-    func addGameToFav(indexPath: IndexPath) {
-       
+    func addGameToFav(indexPath: IndexPath, status: String)   {
+        if status == "heart.fill" {
+            self.homeViewModel.removeFromFav((self.matches?[indexPath.row])!)
+//            let alert : UIAlertController = UIAlertController(title: "Delete from favourites", message: "ARE YOU SURE TO DELETE?", preferredStyle: .alert)
+//
+//            alert.addAction(UIAlertAction(title: "YES", style: .default,handler: { [weak self] action in
+//                guard let self = self else { return }
+//                self.homeViewModel.removeFromFav((self.matches?[indexPath.row])!)
+//                self.flag = false
+//
+//
+//            }))
+//            alert.addAction(UIAlertAction(title: "NO", style: .cancel,handler: nil))
+//            self.present(alert, animated: true, completion: nil)
+//            return flag
+        } else {
+          homeViewModel.addToFav(matches![indexPath.row])
+    
+        }
     }
     
     
 }
+
+
